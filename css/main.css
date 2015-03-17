@@ -6,8 +6,24 @@
     height: 200px;
 }
 
+.logo{
+    height: 100px;
+}
+
+.proj-img{
+    width: 200px;
+}
+
 .pull-down{
     margin-top: 50px;
+}
+
+.pull-down-little{
+    margin-top: 5px;
+}
+
+.pull-down-small{
+    margin-top: 20px;
 }
 
 .center{
