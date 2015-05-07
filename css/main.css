@@ -18,6 +18,10 @@
     margin-top: 50px;
 }
 
+.pull-down-medium{
+    margin-top: 25px;
+}
+
 .pull-down-little{
     margin-top: 5px;
 }
@@ -36,4 +40,9 @@
 
 .social-links{
     width: 50px;
+}
+
+.paper-thumb{
+    width: 100px;
+    margin-bottom: 10px;
 }
