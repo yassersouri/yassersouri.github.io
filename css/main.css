@@ -2,6 +2,10 @@
     font-family: Roboto;
 }
 
+.condensed{
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
 .personal-img{
     height: 200px;
 }
@@ -45,4 +49,16 @@
 .paper-thumb{
     width: 100px;
     margin-bottom: 10px;
+}
+
+.post-link{
+    text-decoration: underline;
+    font-size: 1.2em;
+    color: #00A8C6;
+}
+
+.date{
+    color: rgba(1, 1, 1, 0.25);
+    float: right;
+    font-family: monospace;
 }
