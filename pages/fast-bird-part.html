@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fast Bird Part Localization for Fine-grained Recognition</title>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link href="http://vjs.zencdn.net/4.12/video-js.css" rel="stylesheet">
+    <!-- HEAP -->
+    <script type="text/javascript">
+      window.heap=window.heap||[],heap.load=function(t,e){window.heap.appid=t,window.heap.config=e;var a=document.createElement("script");a.type="text/javascript",a.async=!0,a.src=("https:"===document.location.protocol?"https:":"http:")+"//cdn.heapanalytics.com/js/heap-"+t+".js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(a,n);for(var o=function(t){return function(){heap.push([t].concat(Array.prototype.slice.call(arguments,0)))}},p=["clearEventProperties","identify","setEventProperties","track","unsetEventProperty"],c=0;c<p.length;c++)heap[p[c]]=o(p[c])};
+      heap.load("3638175370");
+    </script>
+    <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/slick/slick-theme.css"/>
+  </head>
+  <body class='roboto'>
+
+    <div class="container">
+      <div id="header" class="row pull-down">
+        <div class="col-md-12 col-xs-12 center-v">
+          <h1>Fast Bird Part Localization for Fine-grained Recognition</h1>
+        </div>
+      </div> <!-- End of Header -->
+
+      <div class="row pull-down">
+        <div id="news" class="col-md-12 col-xs-12">
+          <img class="img-responsive" src="/projects/bird-part/header-pic.png" alt="Fast Bird Part Localization for Fine-grained Recognition">
+          <h3>1. Abstract <a href="#note-1">*</a></h3>
+          <p>In this work we have introduced a new and faster method for part localization of bird species. Part localization is an important step in fine-grained recognition as the discriminative features are highly local. State-of-the-art method of <a href="#ref-1">[1]</a>, uses R-CNN <a href="#ref-2">[2]</a> to localize parts. R-CNN does O(1000) forward passes of the network, which makes it very slow. Comparing to the state-of-the-art <a href="#ref-1">[1]</a>, our method is at least 2 orders of magnitude faster while achieving comparable categorization accuracy.</p>
+
+          <h3>2. Publication</h3>
+          <div class="row pull-down-medium"> <!-- A paper -->
+            <div class="col-sm-4 col-sm-push-8 col-xs-12 center">
+              <a href="/papers/fgvc-2015-fast-bird-part.pdf"><img class="paper-thumb img-thumbnail" alf="Paper thumb" src="/images/fgvc-2015-thumb.jpeg"></a>
+            </div>
+            <div class="col-sm-8 col-sm-pull-4 col-xs-12">
+              <p><b>Fast Bird Part Localization for Fine-Grained Categorization</b></p>
+              <p><u>Yaser Souri</u>, <a href="http://sharif.edu/~skasaei/">Shohreh Kasaei</a></p>
+              <p><a href="https://sites.google.com/site/thirdworkshoponfgvc/">The Third Workshop on Fine-Grained Visual Categorization (FGVC3)</a> in conjunction with <a href="http://www.pamitc.org/cvpr15/">CVPR 2015</a></p>
+              <p><a class="paper-pdf" href="/papers/fgvc-2015-fast-bird-part.pdf">pdf</a> | <a href="/projects/bird-part/mlss2015.pdf">poster</a> | <a href="https://github.com/yassersouri/fast-bird-part-localization">code</a></p>
+            </div>
+          </div> <!-- End of Paper -->
+
+          <h3>3. Part Localization as Pixel Classification</h3>
+          <h4>3.1. Classifying pixels</h4>
+          <p>We pose the problem of finding a part as classifying the set of pixels that belong to that part. Below are example results of our system classifying pixels whether they belong to the head of a bird. The more red a pixel is the more the system thinks it belongs to the head of a bird. Exact probability values can be estimated from the color bar.</p>
+
+          <div class="results">
+            <img class="img-responsive" src="/projects/bird-part/out-1.png" alt="Example Output 1">
+            <img class="img-responsive" src="/projects/bird-part/out-2.png" alt="Example Output 2">
+            <img class="img-responsive" src="/projects/bird-part/out-3.png" alt="Example Output 3">
+          </div>
+
+          <p>To train each part localizer (pixel classifier) we need three things:</p>
+          <ul>
+            <li>feature representation for each pixel</li>
+            <li>a set of positive and negative example pixels</li>
+            <li>a classifier</li>
+          </ul>
+
+          <h5>3.1.1. Feature representation for each pixel (Similart to <a href="#ref-3">[3]</a>)</h5>
+          <p>We use an off-the-shelf Convolutional Neural Network (specifically CaffeNet an almost identical network to AlexNet) which has been pre-trained on the classification task of ILSVRC 2012 and only use a single forward pass of its convolutional layers (conv1 - conv5). After up-sampling each feature map we obtain a good feature representation for all of the pixels in the image.</p>
+
+          <div class="row pull-down-medium">
+            <div class="col-sm-8 col-xs-12">
+              <p><img class="img-responsive" src="/projects/bird-part/deeprf.png" alt="Feature Extraction for each pixel"></p>
+            </div>
+            <div class="col-sm-4 col-sm-offset-0 col-xs-6 col-xs-offset-3">
+              <p><img class="img-responsive" src="/projects/bird-part/hypercolumn.png" alt="Hypercolumn of each image"></p>
+            </div>
+          </div>
+
+          <h5>3.1.2. Positive and negative training pixels</h5>
+          <p>We mine a large set of positive and negative pixels for each part that we want to localize from the training set of CUB-200-2011 dataset. Notice that since the CUB dataset contains part location information we use them during training.</p>
+          <div class="row pull-down-medium">
+            <div class="col-sm-4 col-xs-12 center">
+              <img class="img-responsive" src="/projects/bird-part/head.png" alt="Points for head localization">
+              <p class="caption">Points for head localization</p>
+            </div>
+            <div class="col-sm-4 col-xs-12 center">
+              <img class="img-responsive" src="/projects/bird-part/body.png" alt="Points for body localization">
+              <p class="caption">Points for body localization</p>
+            </div>
+            <div class="col-sm-4 col-xs-12 center">
+              <img class="img-responsive" src="/projects/bird-part/whole.png" alt="Points for bounding box localization">
+              <p class="caption">Points for bounding box localization</p>
+            </div>
+          </div>
+
+          <h5>3.1.3. Pixel Classifier</h5>
+          <p>For classifying pixels we needed a probabilistic classifier that was fast, so we choose Random Forest.</p>
+
+          <h5>3.1.4. Results</h5>
+          <p>Below are a set of results of our pixel classifier that was trained to localize head of the birds.</p>
+          <p><b>Success</b></p>
+          <div class="results">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/1.png" alt="Output 1">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/2.png" alt="Output 2">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/3.png" alt="Output 3">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/4.png" alt="Output 4">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/5.png" alt="Output 5">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/6.png" alt="Output 6">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/7.png" alt="Output 7">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/8.png" alt="Output 8">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/9.png" alt="Output 9">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/10.png" alt="Output 10">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/11.png" alt="Output 11">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/12.png" alt="Output 12">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/13.png" alt="Output 13">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/14.png" alt="Output 14">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/15.png" alt="Output 15">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/16.png" alt="Output 16">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/17.png" alt="Output 17">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/18.png" alt="Output 18">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/19.png" alt="Output 19">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/20.png" alt="Output 20">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/10.png" alt="Output 10">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/21.png" alt="Output 21">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/22.png" alt="Output 22">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/23.png" alt="Output 23">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/24.png" alt="Output 24">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/25.png" alt="Output 25">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/26.png" alt="Output 26">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/27.png" alt="Output 27">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/28.png" alt="Output 28">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/29.png" alt="Output 29">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/30.png" alt="Output 30">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/31.png" alt="Output 31">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/32.png" alt="Output 32">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/33.png" alt="Output 33">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/34.png" alt="Output 34">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/35.png" alt="Output 35">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/36.png" alt="Output 36">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/37.png" alt="Output 37">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/38.png" alt="Output 38">
+            <img class="img-responsive" src="/projects/bird-part/pixel-prob/39.png" alt="Output 39">
+          </div>
+          
+          <p class="pull-down"><b>Failure</b></p>
+
+          <div class="results">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/1.png" alt="Output 1">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/2.png" alt="Output 2">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/3.png" alt="Output 3">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/4.png" alt="Output 4">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/5.png" alt="Output 5">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/6.png" alt="Output 6">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/7.png" alt="Output 7">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/8.png" alt="Output 8">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/9.png" alt="Output 9">
+            <img class="img-responsive" src="/projects/bird-part/prob-fail/10.png" alt="Output 10">
+          </div>
+
+          <h5 class="pull-down">3.1.5. Properties</h5>
+          <p>Our pixel classifier has some very interesting properties.</p>
+          <p>Ability to localize multiple part instances without any computational overhead.</p>
+          <div class="results">
+            <img class="img-responsive" src="/projects/bird-part/multiple/1.png" alt="Output 1">
+            <img class="img-responsive" src="/projects/bird-part/multiple/2.png" alt="Output 2">
+            <img class="img-responsive" src="/projects/bird-part/multiple/3.png" alt="Output 3">
+          </div>
+          <p class="pull-down">Ability to localize parts on pencil line drawings and cartoons.</p>
+          <div class="results">
+            <img class="img-responsive" src="/projects/bird-part/drawing/1.png" alt="Output 1">
+            <img class="img-responsive" src="/projects/bird-part/drawing/2.png" alt="Output 2">
+            <img class="img-responsive" src="/projects/bird-part/drawing/3.png" alt="Output 3">
+          </div>
+          <p class="pull-down">Ability to localize parts on novel classes that the model has not seen in the training set (Since the problem is fine-grained recognition and all classes are sub-class of a general class (e.g. bird) this is expected).</p>
+          <div class="results">
+            <img class="img-responsive" src="/projects/bird-part/new-class/1.png" alt="Output 1">
+            <img class="img-responsive" src="/projects/bird-part/new-class/2.png" alt="Output 2">
+          </div>
+          <p class="pull-down">Ability to detect absence of part with low probabilities.</p>
+          <div class="results">
+            <img class="img-responsive" src="/projects/bird-part/no-head/1.png" alt="Output 1">
+            <img class="img-responsive" src="/projects/bird-part/no-head/2.png" alt="Output 2">
+          </div>
+
+
+          <h4>3.2. Estimating the bounding box around each part</h4>
+          <p>From these classification scores of each pixel we can easily extract the bounding box around each part easily:</p>
+          <ul>
+            <li>Threshold the pixel probability map</li>
+            <li>Do some morphological filtering to remove the noise</li>
+            <li>Find the largest connected component</li>
+            <li>Find the box around that connected component</li>
+          </ul>
+
+          <h5>3.2.1. Results</h5>
+          <p>Below are a set of results of our part localizer that was trained to localize head of the birds.</p>
+          <div class="results">
+            <img class="img-responsive" src="/projects/bird-part/good-results/1.png" alt="Output 1">
+            <img class="img-responsive" src="/projects/bird-part/good-results/2.png" alt="Output 2">
+            <img class="img-responsive" src="/projects/bird-part/good-results/3.png" alt="Output 3">
+            <img class="img-responsive" src="/projects/bird-part/good-results/4.png" alt="Output 4">
+            <img class="img-responsive" src="/projects/bird-part/good-results/5.png" alt="Output 5">
+            <img class="img-responsive" src="/projects/bird-part/good-results/6.png" alt="Output 6">
+            <img class="img-responsive" src="/projects/bird-part/good-results/7.png" alt="Output 7">
+            <img class="img-responsive" src="/projects/bird-part/good-results/8.png" alt="Output 8">
+            <img class="img-responsive" src="/projects/bird-part/good-results/9.png" alt="Output 9">
+            <img class="img-responsive" src="/projects/bird-part/good-results/10.png" alt="Output 10">
+            <img class="img-responsive" src="/projects/bird-part/good-results/11.png" alt="Output 11">
+            <img class="img-responsive" src="/projects/bird-part/good-results/12.png" alt="Output 12">
+            <img class="img-responsive" src="/projects/bird-part/good-results/13.png" alt="Output 13">
+            <img class="img-responsive" src="/projects/bird-part/good-results/14.png" alt="Output 14">
+            <img class="img-responsive" src="/projects/bird-part/good-results/15.png" alt="Output 15">
+            <img class="img-responsive" src="/projects/bird-part/good-results/16.png" alt="Output 16">
+            <img class="img-responsive" src="/projects/bird-part/good-results/17.png" alt="Output 17">
+            <img class="img-responsive" src="/projects/bird-part/good-results/18.png" alt="Output 18">
+            <img class="img-responsive" src="/projects/bird-part/good-results/21.png" alt="Output 19">
+            <img class="img-responsive" src="/projects/bird-part/good-results/20.png" alt="Output 20">
+          </div>
+
+          <p class="pull-down">Below are some images that head, body and the bounding box are localized on them using out system.</p>
+          <div class="all-three">
+            <img class="img-responsive" src="/projects/bird-part/all-three/1.png" alt="Output 1">
+            <img class="img-responsive" src="/projects/bird-part/all-three/2.png" alt="Output 2">
+            <img class="img-responsive" src="/projects/bird-part/all-three/3.png" alt="Output 3">
+            <img class="img-responsive" src="/projects/bird-part/all-three/4.png" alt="Output 4">
+            <img class="img-responsive" src="/projects/bird-part/all-three/5.png" alt="Output 5">
+            <img class="img-responsive" src="/projects/bird-part/all-three/6.png" alt="Output 6">
+            <img class="img-responsive" src="/projects/bird-part/all-three/7.png" alt="Output 7">
+            <img class="img-responsive" src="/projects/bird-part/all-three/8.png" alt="Output 8">
+          </div>
+
+          <p class="pull-down">Below you can see the results of our system applied to consecutive frames of a video.</p>
+          <div>
+            <video id="really-cool-video" class="video-js vjs-default-skin" controls
+             preload="false" poster="/projects/bird-part/tern.png" width="100%" height="400"
+             data-setup='{ "example_option": true}'>
+              <source src="/projects/bird-part/tern.mp4" type='video/mp4'>
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a web browser
+                that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+              </p>
+            </video>
+          </div>
+
+          <h3>4. Fine-grained categorization</h3>
+
+          <p>After we have localized parts we use a very similar approach to <a href="#ref-1">[1]</a> for categorization. For categorization features we combine features from head, body and the bounding box of the bird. We use a fine-tuned CaffeNet network and use the fc7 data as features (same as <a href="#ref-1">[1]</a>). Below you see an overview of the method.</p>
+          <img class="img-responsive" src="/projects/bird-part/categorization.png" alt="Categorization pipeline overview">
+
+          <h4>4.1. Categorization accuracy <a href="#note-2">**</a></h4>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr><th>Method</th><th>Training annotations</th><th>Testing annotations</th><th>Mean accuracy</th></tr>
+            </thead>
+            <tbody>
+              <tr><th><a href="#ref-1">[1]</a></th><th>bounding box + parts</th><th>-</th><th>73.89%</th></tr>
+              <tr><th>Ours</th><th>bounding box + parts</th><th>-</th><th>72.02% (+-0.33)</th></tr>
+            </tbody>
+          </table>
+
+          <h3>5. References and Notes</h3>
+          <p id="note-1">* Some facts might be old, since few months have past since this work was published.</p>
+          <p id="note-1">** As other works on the same dataset has indicated, using a better network like VGG-19 can dramatically improve the performance. Using VGG-19 we can improve the performance to 82% mean accuracy. This work unfortunately cannot be extended to datasets where part location annotation is not available. This indeed is the main limitation of this work.</p>
+          <p id="ref-1">[1] Zhang, Ning, et al. "Part-based R-CNNs for fine-grained category detection." ECCV 2014.</p>
+          <p id="ref-2">[2] Girshick, Ross, et al. "Rich feature hierarchies for accurate object detection and semantic segmentation." CVPR 2014.</p>
+          <p id="ref-3">[3] Hariharan, Bharath, et al. "Hypercolumns for object segmentation and fine-grained localization." CVPR 2015.</p>
+        </div>
+      </div>
+    </div> <!-- End of Container -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="/slick/slick.min.js"></script>
+    <script src="http://vjs.zencdn.net/4.12/video.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        $('.results').slick({
+          dots: true,
+          infinite: true,
+          speed: 150,
+          slidesToShow: 1
+        });
+        $('.all-three').slick({
+          dots: true,
+          infinite: true,
+          speed: 150,
+          slidesToShow: 1,
+          variableWidth: false,
+          slidesToShow: 2,
+          slidesToScroll: 2
+        });
+      });
+
+    </script>
+  </body>
+</html>
