@@ -32,10 +32,10 @@
       <div class="row pull-down">
         <div id="news" class="col-md-12 col-xs-12">
           <img class="img-responsive" src="/projects/bird-part/header-pic.png" alt="Fast Bird Part Localization for Fine-grained Recognition">
-          <h3>1. Abstract <a href="#note-1">*</a></h3>
+          <h1>1. Abstract <a href="#note-1">*</a></h1>
           <p>In this work we have introduced a new and faster method for part localization of bird species. Part localization is an important step in fine-grained recognition as the discriminative features are highly local. State-of-the-art method of <a href="#ref-1">[1]</a>, uses R-CNN <a href="#ref-2">[2]</a> to localize parts. R-CNN does O(1000) forward passes of the network, which makes it very slow. Comparing to the state-of-the-art <a href="#ref-1">[1]</a>, our method is at least 2 orders of magnitude faster while achieving comparable categorization accuracy.</p>
 
-          <h3>2. Publication</h3>
+          <h1>2. Publication</h1>
           <div class="row pull-down-medium"> <!-- A paper -->
             <div class="col-sm-4 col-sm-push-8 col-xs-12 center">
               <a href="/papers/fgvc-2015-fast-bird-part.pdf"><img class="paper-thumb img-thumbnail" alf="Paper thumb" src="/images/fgvc-2015-thumb.jpeg"></a>
@@ -48,8 +48,8 @@
             </div>
           </div> <!-- End of Paper -->
 
-          <h3>3. Part Localization as Pixel Classification</h3>
-          <h4>3.1. Classifying pixels</h4>
+          <h1>3. Part Localization as Pixel Classification</h1>
+          <h2>3.1. Classifying pixels</h2>
           <p>We pose the problem of finding a part as classifying the set of pixels that belong to that part. Below are example results of our system classifying pixels whether they belong to the head of a bird. The more red a pixel is the more the system thinks it belongs to the head of a bird. Exact probability values can be estimated from the color bar.</p>
 
           <div class="results">
@@ -65,7 +65,7 @@
             <li>a classifier</li>
           </ul>
 
-          <h5>3.1.1. Feature representation for each pixel (Similart to <a href="#ref-3">[3]</a>)</h5>
+          <h3>3.1.1. Feature representation for each pixel (Similart to <a href="#ref-3">[3]</a>)</h3>
           <p>We use an off-the-shelf Convolutional Neural Network (specifically CaffeNet an almost identical network to AlexNet) which has been pre-trained on the classification task of ILSVRC 2012 and only use a single forward pass of its convolutional layers (conv1 - conv5). After up-sampling each feature map we obtain a good feature representation for all of the pixels in the image.</p>
 
           <div class="row pull-down-medium">
@@ -77,7 +77,7 @@
             </div>
           </div>
 
-          <h5>3.1.2. Positive and negative training pixels</h5>
+          <h3>3.1.2. Positive and negative training pixels</h3>
           <p>We mine a large set of positive and negative pixels for each part that we want to localize from the training set of CUB-200-2011 dataset. Notice that since the CUB dataset contains part location information we use them during training.</p>
           <div class="row pull-down-medium">
             <div class="col-sm-4 col-xs-12 center">
@@ -94,12 +94,12 @@
             </div>
           </div>
 
-          <h5>3.1.3. Pixel Classifier</h5>
+          <h3>3.1.3. Pixel Classifier</h3>
           <p>For classifying pixels we needed a probabilistic classifier that was fast, so we choose Random Forest.</p>
 
-          <h5>3.1.4. Results</h5>
+          <h3>3.1.4. Results</h3>
           <p>Below are a set of results of our pixel classifier that was trained to localize head of the birds.</p>
-          <p><b>Success</b></p>
+          <h4>Success</h4>
           <div class="results">
             <img class="img-responsive" src="/projects/bird-part/pixel-prob/1.png" alt="Output 1">
             <img class="img-responsive" src="/projects/bird-part/pixel-prob/2.png" alt="Output 2">
@@ -143,7 +143,7 @@
             <img class="img-responsive" src="/projects/bird-part/pixel-prob/39.png" alt="Output 39">
           </div>
           
-          <p class="pull-down"><b>Failure</b></p>
+          <h4 class="pull-down">Failure</h4>
 
           <div class="results">
             <img class="img-responsive" src="/projects/bird-part/prob-fail/1.png" alt="Output 1">
@@ -158,7 +158,7 @@
             <img class="img-responsive" src="/projects/bird-part/prob-fail/10.png" alt="Output 10">
           </div>
 
-          <h5 class="pull-down">3.1.5. Properties</h5>
+          <h3 class="pull-down">3.1.5. Properties</h3>
           <p>Our pixel classifier has some very interesting properties.</p>
           <p>Ability to localize multiple part instances without any computational overhead.</p>
           <div class="results">
@@ -184,7 +184,7 @@
           </div>
 
 
-          <h4>3.2. Estimating the bounding box around each part</h4>
+          <h2>3.2. Estimating the bounding box around each part</h2>
           <p>From these classification scores of each pixel we can easily extract the bounding box around each part easily:</p>
           <ul>
             <li>Threshold the pixel probability map</li>
@@ -193,7 +193,7 @@
             <li>Find the box around that connected component</li>
           </ul>
 
-          <h5>3.2.1. Results</h5>
+          <h3>3.2.1. Results</h3>
           <p>Below are a set of results of our part localizer that was trained to localize head of the birds.</p>
           <div class="results">
             <img class="img-responsive" src="/projects/bird-part/good-results/1.png" alt="Output 1">
@@ -243,12 +243,12 @@
             </video>
           </div>
 
-          <h3>4. Fine-grained categorization</h3>
+          <h1>4. Fine-grained categorization</h1>
 
           <p>After we have localized parts we use a very similar approach to <a href="#ref-1">[1]</a> for categorization. For categorization features we combine features from head, body and the bounding box of the bird. We use a fine-tuned CaffeNet network and use the fc7 data as features (same as <a href="#ref-1">[1]</a>). Below you see an overview of the method.</p>
           <img class="img-responsive" src="/projects/bird-part/categorization.png" alt="Categorization pipeline overview">
 
-          <h4>4.1. Categorization accuracy <a href="#note-2">**</a></h4>
+          <h2>4.1. Categorization accuracy <a href="#note-2">**</a></h2>
           <table class="table table-striped table-bordered">
             <thead>
               <tr><th>Method</th><th>Training annotations</th><th>Testing annotations</th><th>Mean accuracy</th></tr>
@@ -259,7 +259,7 @@
             </tbody>
           </table>
 
-          <h3>5. References and Notes</h3>
+          <h1>5. References and Notes</h1>
           <p id="note-1">* Some facts might be old, since few months have past since this work was published.</p>
           <p id="note-1">** As other works on the same dataset has indicated, using a better network like VGG-19 can dramatically improve the performance. Using VGG-19 we can improve the performance to 82% mean accuracy. This work unfortunately cannot be extended to datasets where part location annotation is not available. This indeed is the main limitation of this work.</p>
           <p id="ref-1">[1] Zhang, Ning, et al. "Part-based R-CNNs for fine-grained category detection." ECCV 2014.</p>
