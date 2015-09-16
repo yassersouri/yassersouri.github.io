@@ -95,7 +95,7 @@
                 <td>92.37</td>
               </tr>
               <tr>
-                <td>CaffeNet-ILSVRC2012-fc7 <i>(ours)</i></td>
+                <td>CaffeNet-ILSVRC2012-fc7 <i>(baseline)</i></td>
                 <td>98.00</td>
                 <td>94.46</td>
                 <td>92.92</td>
@@ -104,9 +104,19 @@
                 <td>95.02</td>
                 <td>94.90</td>
               </tr>
+              <tr>
+                <td>CaffeNet-Places-fc7 <i>(baseline)</i></td>
+                <td>99.10</td>
+                <td>95.09</td>
+                <td>94.85</td>
+                <td>96.11</td>
+                <td>96.60</td>
+                <td>97.45</td>
+                <td><b>96.53</b></td>
+              </tr>
             </tbody>
           </table>
-          <p>We can see that this simple baseline outperforms the state-of-the-art by a considerable margin. Given that this is a scene dataset utilizing a network which was trained on the <a href="http://places.csail.mit.edu/">Places dataset</a> instead of ILSVRC for feature extraction would increase the performance.</p>
+          <p>We can see that this simple baseline outperforms the state-of-the-art by a considerable margin. Given that this is a scene dataset utilizing a network which was trained on the <a href="http://places.csail.mit.edu/">Places dataset</a> instead of ILSVRC for feature extraction increases the performance.</p>
           <h3>3.2.2. PubFig</h3>
           <table class="table table-striped table-bordered">
             <thead>
@@ -170,10 +180,10 @@
                 <td>89.07</td>
                 <td>90.43</td>
                 <td>86.70</td>
-                <td>89.72</td>
+                <td><b>89.72</b></td>
               </tr>
               <tr>
-                <td>CaffeNet-ILSVRC2012-fc7 <i>(ours)</i></td>
+                <td>CaffeNet-ILSVRC2012-fc7 <i>(baseline)</i></td>
                 <td>85.56</td>
                 <td>80.59</td>
                 <td>85.20</td>
@@ -194,7 +204,8 @@
           <h1 id="progress">4. Progress</h1>
           <p>So far I have only experimented with the simple baseline of "CaffeNet-ILSVRC2012-fc7" and there are many directions I would like to take:</p>
           <ul>
-            <li>Experimenting with a network pre-trained on the <a href="http://places.csail.mit.edu/">Places dataset</a> for OSR and see if it further improves the performance.</li>
+            <li><strike>Experimenting with a network pre-trained on the <a href="http://places.csail.mit.edu/">Places dataset</a> for OSR and see if it further improves the performance.</strike></li>
+            <li>Experiment with deeper CNN architectures such as VGG-16, and see if they further result in increase in performance.</li>
             <li>Experiment with other relative attributes dataset such as <a href="http://vision.cs.utexas.edu/projects/finegrained/utzap50k/">Zappos-50k</a> <a href="#ref-3">[3]</a> and <a href="http://cvit.iiit.ac.in/projects/relativeParts/">LFW-10</a> <a href="#ref-4">[4]</a>.</li>
             <li>Try to implement "the ranking layer" in one of the deep learning frameworks such as Caffe or Torch. Ideally I would like to implement the (recently award wining) <a href="#ref-7">[7]</a> paper. Then try to incorporate it into a Convolutional Neural Network for fine-tuning the features or learning them end-to-end.</li>
           </ul>
