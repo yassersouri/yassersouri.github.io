@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Yasser Souri</title>
+    <title>Yaser Souri</title>
 
     <!-- Bootstrap -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -21,12 +21,12 @@
     <div class="container">
       <div id="header" class="row pull-down">
         <div class="col-md-3 col-xs-12 center">
-          <img class='img-circle personal-img' src="/images/me.jpeg" alt="Yasser Souri">
+          <img class='img-circle personal-img' src="/images/me.jpeg" alt="Yaser Souri">
         </div>
         <div class="col-md-9 col-xs-12 center-v">
-          <h1>Yasser Souri</h1>
+          <h1>Yaser Souri</h1>
           <h4>Master of science, <a href="http://ipl.ce.sharif.edu/">Image Processing Lab</a>, <a href="http://www.sharif.ir/web/en">Sharif University of Technology</a></h4>
-          <p id="email">ysouri@ce.sharif.edu - yassersouri@gmail.com</p>
+          <p id="email">yassersouri@gmail.com</p>
           <p>
             <a href="https://github.com/yassersouri" title="Github"><img class="social-links" src="/images/github.svg"></a>
             <a href="https://twitter.com/yassersouri" title="Twitter"><img class="social-links" src="/images/twitter.svg"></a>
@@ -40,7 +40,10 @@
           <h3>News</h3>
           <ul>
             <li>
-              (2015/05) A paper on a fast method for localizing bird parts is accepted to <a href="https://sites.google.com/site/thirdworkshoponfgvc/">FCVC3</a>.
+              (2015/10) A paper on Persian handwritten digit recognition accepted as an oral to <a href="http://mvip2015.sbu.ac.ir/English/">MVIP 2015</a>.
+            </li>
+            <li>
+              (2015/05) A paper on a fast method for localizing bird parts accepted to CVPR 2015 Workshop <a href="https://sites.google.com/site/thirdworkshoponfgvc/">FGVC3</a>.
             </li>
             <li>
               (2015/03) Just finished my master studies. I am looking for a PhD position in Computer Vision/Machine Learning.
@@ -63,6 +66,20 @@
         <div id="publications" class="col-md-8 col-md-offset-2 col-xs-12">
           <h3>Publications</h3>
           <p>(<a href="http://scholar.google.com/citations?user=59DUkRYAAAAJ&hl=en">Google Scholar</a>)</p>
+
+
+          <div class="row pull-down-medium"> <!-- A paper -->
+            <div class="col-sm-4 col-sm-push-8 col-xs-12 center">
+              <a href="/papers/mvip-2015-persian-handwritten-digit.pdf"><img class="paper-thumb img-thumbnail" alf="Paper thumb" src="/images/mvip-2015-thumb.png"></a>
+            </div>
+            <div class="col-sm-8 col-sm-pull-4 col-xs-12">
+              <p><b>Persian Handwritten Digit Recognition by Random Forest and Convolutional Neural Networks</b></p>
+              <p>Yasin Zamani, <u>Yaser Souri</u>, Hossein Rashidi, <a href="http://sharif.edu/~skasaei/">Shohreh Kasaei</a></p>
+              <p><b>Oral</b>, <a href="http://mvip2015.sbu.ac.ir/English/">Iranian Machine Vision and Image Processing Conference (MVIP) 2015</a></p>
+              <p><a class="paper-pdf" href="/papers/mvip-2015-persian-handwritten-digit.pdf">pdf</a> | <a href="#">ieee link (coming soon)</a></p>
+            </div>
+          </div> <!-- End of Paper -->
+
           <div class="row pull-down-medium"> <!-- A paper -->
             <div class="col-sm-4 col-sm-push-8 col-xs-12 center">
               <a href="/papers/fgvc-2015-fast-bird-part.pdf"><img class="paper-thumb img-thumbnail" alf="Paper thumb" src="/images/fgvc-2015-thumb.jpeg"></a>
@@ -116,13 +133,13 @@
 
           <div class="row pull-down-small">
             <div class="col-sm-4 col-sm-push-8 col-xs-12 center">
-              <img class="img-rounded proj-img" alt="Deep Relative Attiributes" src="/projects/deep-relative/relative_motivation.png">
+              <img class="img-rounded proj-img" alt="Deep Relative Attiributes" src="/projects/deep-relative/dra_motivation.png">
             </div>
             <div class="col-sm-8 col-sm-pull-4 col-xs-12">
-              <p><b><a href="/pages/deep-relative.html">Relative Attributes using Deep Learning</a></b></p>
+              <p><b><a href="/pages/deep-relative.html">Deep Relative Attributes</a></b></p>
               <p>Relative Attributes are a very natural way of thinking in terms of attributes and communicating with machines. The idea was introduced in the award winning ICCV 2011 paper by D. Parikh and K. Grauman. In this project we want to improve their system by using a Deep Neural Network instead of a RankSVM to do the ranking. This way we can also use Convolutional Layers to learn the features end-to-end.</p>
               <p><b>Code</b>: Lasagne, Theano, Python</p>
-              <p><b>Collaborators</b>: <a href="http://ce.sharif.edu/~noury/">Erfan Noury</a> <a href="http://www.unc.edu/~eadeli/">Ehsan Adeli</a></p>
+              <p><b>Collaborators</b>: <a href="http://ce.sharif.edu/~noury/">Erfan Noury</a>, <a href="http://www.unc.edu/~eadeli/">Ehsan Adeli</a></p>
             </div>
           </div>
 
@@ -134,7 +151,7 @@
               <p><b><a href="/pages/fast-bird-part.html">Fast Bird Part Localization (Fine-grained recognition)</a></b></p>
               <p>A fast way to detect bird parts (e.g. head) using pre-pixel deep features and random forests is introduced. Then using the detected part locations we can do fine-grained recognition on CUB-200-2011. Our mean accuracy is 72.02% which is comparable with state-of-the-art (73.89%) while being at least 2 orders of magnitude faster when detecting parts. Our method only uses a single forward pass of the network to detect parts.</p>
               <p><b>Code</b>: Python, Caffe, Scikit-learn</p>
-              <p><b>Collaborator</b>: <a href="http://www.erikrodner.de/">Erik Rodner</a></p>
+              <p><b>Collaborators</b>: <a href="http://sharif.edu/~skasaei/">Shohreh Kasaei</a>, <a href="http://www.erikrodner.de/">Erik Rodner</a></p>
             </div>
           </div>
 
