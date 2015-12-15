@@ -24,201 +24,35 @@
       <div id="header" class="row pull-down">
         <div class="col-md-12 col-xs-12 center-v">
           <p><a href="/" title="Back">Back to homepage</a></p>
-          <h1>Relative Attributes using Deep Learning</h1>
+          <h1>Deep Relative Attributes</h1>
           <p><i>Work in progress</i></p>
+          <p><i>Will update the page soon</i></p>
         </div>
       </div> <!-- End of Header -->
 
       <div class="row pull-down">
         <div id="news" class="col-md-12 col-xs-12">
-          <img class="img-responsive" src="/projects/deep-relative/relative_motivation.png" alt="Relative Attributes using Deep Learning">
+          <img class="img-responsive" src="/projects/deep-relative/feature_space.png" alt="Deep Relative Attributes">
           <h1 id="abstract">1. Abstract</h1>
-          <p>Relative Attributes are a very natural way of thinking in terms of attributes and communicating with machines. The idea was introduced in the award winning ICCV 2011 paper by D. Parikh and K. Grauman <a href="#ref-1">[1]</a>. In this project we want to improve their system by using a Deep Neural Network instead of a RankSVM to do the ranking. This way we can also use Convolutional Layers to learn the features end-to-end or fine-tune the features.</p>
-          <p>This is an ongoing project. To see the progress go to the <a href="#progress" title="Progress">Progress</a> section.</p>
+          <p>Visual attributes are great means of describing images or scenes, in a way both humans and computers understand. In order to establish a correspondence between images and to be able to compare the strength of each property between images, relative attributes were introduced. However, since their introduction, hand-crafted and engineered features were used to learn complex models for the problem of relative attributes. This limits the applicability of those methods for more realistic cases. We introduce a two part deep learning architecture for the task of relative attribute prediction. A convolutional neural network (ConvNet) architecture is adopted to learn the features with addition of an additional layer (ranking layer) that learns to rank the images based on these features. Also an appropriate ranking loss is adapted to train the whole network in an end-to-end fashion. Our proposed method outperforms the baseline and state-of-the-art methods in relative attribute prediction on various datasets. Our qualitative results also show that the network is able to learn effective features for the task. Furthermore, we use our trained models to visualize saliency maps for each attribute.</p>
+          <p>This is an ongoing project. We hope to achieve even better results soon.</p>
 
-          <h1 id="motivation">2. Motivation</h1>
-          After the "Relative Attributes" paper <a href="#ref-1">[1]</a>, there was a stream of papers who wanted to solve the same or similar task (<a href="#ref-2">[2]</a>, <a href="#ref-3">[3]</a>, <a href="#ref-4">[4]</a>, <a href="#ref-5">[5]</a>) using a different and often more complex model (instead of the original RankSVM model). I think as progress in the "Visual Recognition" field has shown, for solving the problem you actually need to change the features not the model. So in this project I actually want to experiment with how learning the features end-to-end (or fine-tuning the features) can improve Relative Attributes accuracy and power.
+          <h1 id="publication">2. Publication</h1>
+          <div class="row pull-down-medium"> <!-- A paper -->
+            <div class="col-sm-4 col-sm-push-8 col-xs-12 center">
+              <a href="/papers/deep-relative-attributes-v1.pdf"><img class="paper-thumb img-thumbnail" alf="Paper thumb" src="/images/dra-v1-thumb.png"></a>
+            </div>
+            <div class="col-sm-8 col-sm-pull-4 col-xs-12">
+              <p><b>Deep Relative Attributes</b></p>
+              <p><u>Yaser Souri</u>, <a href="http://ce.sharif.edu/~noury/">Erfan Noury</a>, <a href="http://www.unc.edu/~eadeli/">Ehsan Adeli</a></p>
+              <p>Submitted to a top tier computer vision conference</p>
+              <p><a class="paper-arxiv" href="http://arxiv.org/abs/1512.04103">arXiv</a> | code</p>
+            </div>
+          </div> <!-- End of Paper -->
 
-          <h1 id="baseline">3. Baseline <a href="#note-1">*</a></h1>
-          <p>The obvious baseline is going to be using <a href="http://www.csc.kth.se/cvap/cvg/DL/ots/">"off-the-shelf" features</a> of a Deep Convolutional Neural Network (namely the last fully connected layer) with the original "RankSVM" model of <a href="#ref-1">[1]</a> to do the task.</p>
+          <h1 id="code">3. Code</h1>
+          <p>We hope to release the code and the trained models soon.</p>
 
-          <h2>3.1. Implementation</h2>
-          Implementing this baseline was not a hard problem since Parikh et. al. have made their code <a href="https://filebox.ece.vt.edu/~parikh/relative.html#code">available online</a>. But this is only the model. For loading the data and making it ready for the model and evaluating the accuracy of the model I had to write some custom code. This small piece of code is available at: <a href="https://github.com/yassersouri/deep-relative-attributes">github.com/yassersouri/deep-relative-attributes</a>.
-
-          <h2>3.2. Results</h2>
-          <p>We have evaluated the accuracy of the model with the default parameters on 2 original datasets of "OSR" and "PubFig". The baseline is named as "NNN-DDD-LLL" where NNN indicates what neural network architecture was used, DDD indicates what dataset that neural network was pre-trained on and LLL indicates what layer was used as features. For example "CaffeNet-ILSVRC2012-fc7" means that using the fc7 features of a <a href="https://github.com/BVLC/caffe/tree/master/models/bvlc_reference_caffenet">CaffeNet</a> which was pre-trained on the ILSVRC2012 dataset.</p>
-          <p>Here we report the accuracy of relative predictions. "What percent of the relative predictions made was correct?" To calculate this we go over all image pairs in the test set and evaluate the relative prediction made by the model.</p>
-
-          <h3>3.2.1. OSR</h3>
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Natrl</th>
-                <th>Open</th>
-                <th>Persp</th>
-                <th>LgSize</th>
-                <th>Diag</th>
-                <th>ClsDepth</th>
-                <th>Mean</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Relative Attributes <a href="#ref-1">[1]</a></td>
-                <td>95.03</td>
-                <td>90.77</td>
-                <td>86.73</td>
-                <td>86.23</td>
-                <td>86.50</td>
-                <td>87.53</td>
-                <td>88.80</td>
-              </tr>
-              <tr>
-                <td>Relative Forest <a href="#ref-2">[2]</a></td>
-                <td>95.24</td>
-                <td>92.39</td>
-                <td>87.58</td>
-                <td>88.34</td>
-                <td>89.34</td>
-                <td>89.54</td>
-                <td>90.41</td>
-              </tr>
-              <tr>
-                <td>Fine-grained Comparison <a href="#ref-3">[3]</a></td>
-                <td>95.70</td>
-                <td>94.10</td>
-                <td>90.43</td>
-                <td>91.10</td>
-                <td>92.43</td>
-                <td>90.47</td>
-                <td>92.37</td>
-              </tr>
-              <tr>
-                <td>CaffeNet-ILSVRC2012-fc7 <i>(baseline)</i></td>
-                <td>98.00</td>
-                <td>94.46</td>
-                <td>92.92</td>
-                <td>94.08</td>
-                <td>94.91</td>
-                <td>95.02</td>
-                <td>94.90</td>
-              </tr>
-              <tr>
-                <td>CaffeNet-Places-fc7 <i>(baseline)</i></td>
-                <td>99.10</td>
-                <td>95.09</td>
-                <td>94.85</td>
-                <td>96.11</td>
-                <td>96.60</td>
-                <td>97.45</td>
-                <td><b>96.53</b></td>
-              </tr>
-            </tbody>
-          </table>
-          <p>We can see that this simple baseline outperforms the state-of-the-art by a considerable margin. Given that this is a scene dataset utilizing a network which was trained on the <a href="http://places.csail.mit.edu/">Places dataset</a> instead of ILSVRC for feature extraction increases the performance.</p>
-          <h3>3.2.2. PubFig</h3>
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Male</th>
-                <th>White</th>
-                <th>Young</th>
-                <th>Smiling</th>
-                <th>Chubby</th>
-                <th>Forehead</th>
-                <th>Eyebrow</th>
-                <th>Eye</th>
-                <th>Nose</th>
-                <th>Lip</th>
-                <th>Face</th>
-                <th>Mean</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Relative Attributes <a href="#ref-1">[1]</a></td>
-                <td>81.80</td>
-                <td>76.97</td>
-                <td>83.20</td>
-                <td>79.90</td>
-                <td>76.27</td>
-                <td>87.60</td>
-                <td>79.87</td>
-                <td>81.67</td>
-                <td>77.40</td>
-                <td>79.17</td>
-                <td>82.33</td>
-                <td>80.56</td>
-              </tr>
-              <tr>
-                <td>Relative Forest <a href="#ref-2">[2]</a></td>
-                <td>85.33</td>
-                <td>82.59</td>
-                <td>84.41</td>
-                <td>83.36</td>
-                <td>78.97</td>
-                <td>88.83</td>
-                <td>81.84</td>
-                <td>83.15</td>
-                <td>80.43</td>
-                <td>81.87</td>
-                <td>86.31</td>
-                <td>83.37</td>
-              </tr>
-              <tr>
-                <td>Fine-grained Comparison <a href="#ref-3">[3]</a></td>
-                <td>91.77</td>
-                <td>87.43</td>
-                <td>91.87</td>
-                <td>87.00</td>
-                <td>87.37</td>
-                <td>94.00</td>
-                <td>89.83</td>
-                <td>91.40</td>
-                <td>89.07</td>
-                <td>90.43</td>
-                <td>86.70</td>
-                <td><b>89.72</b></td>
-              </tr>
-              <tr>
-                <td>CaffeNet-ILSVRC2012-fc7 <i>(baseline)</i></td>
-                <td>85.56</td>
-                <td>80.59</td>
-                <td>85.20</td>
-                <td>84.81</td>
-                <td>82.56</td>
-                <td>88.50</td>
-                <td>83.50</td>
-                <td>83.11</td>
-                <td>81.52</td>
-                <td>85.67</td>
-                <td>86.23</td>
-                <td>84.30</td>
-              </tr>
-            </tbody>
-          </table>
-          <p>On this dataset which contains faces we see a different story. Here the baseline outperforms the "Relative Attributes" and "Relative Forest" method on average but has a long way to achieve the performance of "Fine-grained Comparison" method <a href="#ref-3">[3]</a>. This I think is mostly due to the fact that the features learned by the CaffeNet-ILSVRC2012 are not good for faces as the dataset contains many other objects and classes including lots of animals. This in fact shows that learning the features end-to-end or fine-tuning them will actually help and is a promising direction to take.</p>
-
-          <h1 id="progress">4. Progress</h1>
-          <p>So far I have only experimented with the simple baseline of "CaffeNet-ILSVRC2012-fc7" and there are many directions I would like to take:</p>
-          <ul>
-            <li><strike>Experimenting with a network pre-trained on the <a href="http://places.csail.mit.edu/">Places dataset</a> for OSR and see if it further improves the performance.</strike></li>
-            <li>Experiment with deeper CNN architectures such as VGG-16, and see if they further result in increase in performance.</li>
-            <li>Experiment with other relative attributes dataset such as <a href="http://vision.cs.utexas.edu/projects/finegrained/utzap50k/">Zappos-50k</a> <a href="#ref-3">[3]</a> and <a href="http://cvit.iiit.ac.in/projects/relativeParts/">LFW-10</a> <a href="#ref-4">[4]</a>.</li>
-            <li>Try to implement "the ranking layer" in one of the deep learning frameworks such as Caffe or Torch. Ideally I would like to implement the (recently award wining) <a href="#ref-7">[7]</a> paper. Then try to incorporate it into a Convolutional Neural Network for fine-tuning the features or learning them end-to-end.</li>
-          </ul>
-          
-          <h1 id="references">5. References and Notes</h1>
-          <p id="note-1">* In the recent paper <a href="#ref-6">[6]</a> a very similar method to this baseline was used.</p>
-          <p id="ref-1">[1] Parikh, Devi, and Kristen Grauman. "Relative attributes." ICCV 2011.</p>
-          <p id="ref-2">[2] Li, Shaoxin, Shiguang Shan, and Xilin Chen. "Relative forest for attribute prediction." ACCV 2012.</p>
-          <p id="ref-3">[3] Yu, Anbo, and Kristen Grauman. "Fine-grained visual comparisons with local learning." CVPR 2014.</p>
-          <p id="ref-4">[4] Sandeep, Ramachandruni N., Yashaswi Verma, and C. V. Jawahar. "Relative Parts: Distinctive Parts for Learning Relative Attributes." CVPR 2014.</p>
-          <p id="ref-5">[5] Lee, Yong Jae, Alexei Efros, and Martial Hebert. "Style-aware mid-level representation for discovering visual connections in space and time." ICCV 2013.</p>
-          <p id="ref-6">[6] Deza, Arturo, and Devi Parikh. "Understanding image virality." CVPR 2015.</p>
-          <p id="ref-7">[7] Burges, Chris, et al. "Learning to rank using gradient descent." ICML 2005.</p>
         </div>
       </div>
     </div> <!-- End of Container -->
