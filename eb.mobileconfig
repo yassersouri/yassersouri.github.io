@@ -82,7 +82,7 @@ Ihre Uni-ID sowie Ihr Passwort werden dauerhaft auf diesem Gerät gespeichert.</
 			<key>PayloadDescription</key>
 			<string>Configures wireless connectivity settings.</string>
 			<key>PayloadDisplayName</key>
-			<string>WiFi (eduroam)</string>
+			<string>WiFi (eduroam-cs)</string>
 			<key>PayloadIdentifier</key>
 			<string>com.apple.wifi.managed.80C9FBF6-6AC9-4994-B9AD-1BDAE30517F8</string>
 			<key>PayloadOrganization</key>
@@ -104,11 +104,11 @@ Ihre Uni-ID sowie Ihr Passwort werden dauerhaft auf diesem Gerät gespeichert.</
 
 Bitte halten Sie zur Einrichtung Ihre Uni-ID sowie Ihr dazugehöriges Passwort bereit.</string>
 	<key>PayloadDisplayName</key>
-	<string>Uni Bonn eduroam</string>
+	<string>Uni Bonn cs eduroam</string>
 	<key>PayloadIdentifier</key>
-	<string>de.uni-bonn.hrz.mobiles.eduroam</string>
+	<string>de.uni-bonn.hrz.mobiles.cs-eduroam</string>
 	<key>PayloadOrganization</key>
-	<string>HRZ Universität Bonn</string>
+	<string>HRZ Universität Bonn (Modified)</string>
 	<key>PayloadRemovalDisallowed</key>
 	<false/>
 	<key>PayloadType</key>
