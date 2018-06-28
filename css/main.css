@@ -42,8 +42,8 @@
     vertical-align: middle;
 }
 
-.social-links{
-    width: 50px;
+.social-links:hover{
+    text-decoration: none;
 }
 
 .paper-thumb{
