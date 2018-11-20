@@ -77,3 +77,13 @@
     .vjs-default-skin .vjs-big-play-button {left:25%;top:25%;width:50%;height:50%;font-size:5em;}
 }
 
+a.bibtex {
+    text-decoration-style: dashed;
+    text-decoration-color: grey;
+    text-decoration-line: underline;
+    color: grey;
+}
+
+pre.bibtext {
+    display: none;
+}
