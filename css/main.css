@@ -87,3 +87,8 @@ a.bibtex {
 pre.bibtext {
     display: none;
 }
+
+a.disabled-link {
+  color: gray;
+  pointer-events: none;
+}
