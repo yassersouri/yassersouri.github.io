@@ -48,7 +48,7 @@
 
 .paper-thumb{
     width: 200px;
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
 }
 
 .post-link{
@@ -91,4 +91,11 @@ pre.bibtext {
 a.disabled-link {
   color: gray;
   pointer-events: none;
+}
+
+hr.style-one {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
 }
